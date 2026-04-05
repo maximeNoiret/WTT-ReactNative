@@ -1,50 +1,67 @@
-# Welcome to your Expo app 👋
+# 🎵 WTT - What's The Track
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Bienvenue sur **WTT (What's The Track)**, un jeu de blind-test musical interactif et nerveux, inspiré du format Kahoot ! Testez votre culture musicale à travers différents thèmes, répondez le plus vite possible et battez vos propres records.
 
-## Get started
+> 🤖 **Note de transparence :** Les visuels de cette application (UI/UX, choix des couleurs, mise en page) ainsi que la rédaction de ce fichier README ont été réalisés avec l'assistance d'une Intelligence Artificielle.
 
-1. Install dependencies
+---
 
+## ✨ Fonctionnalités
+
+* **Mode Kahoot immersif :** 4 propositions de réponses colorées générées à chaque manche.
+* **Musique en temps réel :** Extraits audio haute qualité récupérés directement via l'API publique de Deezer.
+* **Catégories variées :** Rap Français, Top Hits Pop, Classiques Rock, Disney, Années 80, etc.
+* **Score dynamique (Timer) :** Une barre de temps de 30 secondes s'écoule. Plus la réponse est rapide, plus le score est élevé (jusqu'à 1000 points par bonne réponse).
+* **Historique des parties :** Sauvegarde locale des scores et dates de jeu sur l'appareil pour suivre sa progression.
+* **Animations :** Écran de démarrage personnalisé (Splash Screen) et modale fluide pour les règles du jeu.
+
+---
+
+## 🛠️ Stack Technique
+
+* **Framework :** React Native / Expo
+* **Navigation :** Expo Router (File-based routing)
+* **State Management :** Zustand (Gestion du score et des manches)
+* **Audio :** `expo-av`
+* **Stockage :** `@react-native-async-storage/async-storage`
+* **Données :** API Deezer (Fetch natif + Proxy CORS pour le développement Web)
+
+---
+
+## 🚀 Installation et Lancement
+
+1. **Installer les dépendances :**
+   Placez-vous à la racine du projet et installez les paquets nécessaires.
    ```bash
    npm install
-   ```
 
-2. Start the app
+2. **Lancer le serveur local :**
 
    ```bash
-   npx expo start
-   ```
+   npx expo start -c
 
-In the output, you'll find options to open the app in a
+Tester sur votre appareil (Recommandé) :
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Téléchargez l'application Expo Go sur votre smartphone (iOS ou Android).
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Scannez le QR Code affiché dans votre terminal.
 
-## Get a fresh project
+En cas de blocage réseau/pare-feu lors du scan, utilisez plutôt la commande : npx expo start --tunnel.
 
-When you're ready, run:
+## 📂 Architecture du Projet
 
-```bash
-npm run reset-project
-```
+Le projet suit une séparation stricte des responsabilités :
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+/app : Les écrans principaux (Routeur automatique).
 
-## Learn more
+/components : Les éléments d'interface réutilisables (Timer, ProgressBar).
 
-To learn more about developing your project with Expo, look at the following resources:
+/hooks : Logique d'interface complexe isolée (Animation du Splash Screen).
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+/service : Les ponts vers l'extérieur (Requêtes API Deezer, Sauvegarde JSON).
 
-## Join the community
+/store : Le "cerveau" global du jeu avec Zustand.
 
-Join our community of developers creating universal apps.
+/utils : Les fonctions d'aide isolées (Mélange de tableaux, Algorithme de calcul du score).
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Un projet imaginé et développé par EchoPlay Studio
