@@ -6,8 +6,7 @@ interface GameState {
   maxRounds: number;
   isPlaying: boolean;
   playlistId: string;
-  
-  startGame: (id: string) => void; 
+  startGame: (id: string) => void;
   addScore: (points: number) => void;
   nextRound: () => void;
   endGame: () => void;
@@ -16,10 +15,9 @@ interface GameState {
 export const useGameStore = create<GameState>((set) => ({
   score: 0,
   currentRound: 1,
-  maxRounds: 10, 
+  maxRounds: 10,
   isPlaying: false,
-  playlistId: '1306931615',
-
+  playlistId: '',
   startGame: (id) => set({ score: 0, currentRound: 1, isPlaying: true, playlistId: id }),
   addScore: (points) => set((state) => ({ score: state.score + points })),
   nextRound: () => set((state) => ({ currentRound: state.currentRound + 1 })),

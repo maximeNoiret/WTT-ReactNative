@@ -3,12 +3,12 @@ import { useRouter } from 'expo-router';
 import { useGameStore } from '../../store/useGameStore';
 
 const CATEGORIES = [
-  { id: '5233736826', title: 'Top Hits Pop', color: '#1DB954', icon: '🌟' }, // Playlist: Pop Hits
-  { id: '1404470955', title: 'Rap Français', color: '#E21B3C', icon: '🎤' }, // Playlist: Rap FR Hits
-  { id: '1306931615', title: 'Classiques Rock', color: '#1368CE', icon: '🎸' }, // Playlist: Rock Essentials
-  { id: '1163842311', title: 'Années 80', color: '#D89E00', icon: '🕺' }, // Playlist: En mode 80
-  { id: '613860315', title: 'Disney', color: '#9B59B6', icon: '🏰' }, // TA PLAYLIST !
-  { id: '1060975211', title: 'Tubes Inoubliables', color: '#34495E', icon: '🕰️' }, // Playlist: Classiques FR & US
+  { id: '5233736826', title: 'Top Hits Pop', color: '#1DB954', icon: '🌟' },
+  { id: '1404470955', title: 'Rap Français', color: '#E21B3C', icon: '🎤' },
+  { id: '1306931615', title: 'Classiques Rock', color: '#1368CE', icon: '🎸' },
+  { id: '1163842311', title: 'Années 80', color: '#D89E00', icon: '🕺' },
+  { id: '613860315', title: 'Disney', color: '#9B59B6', icon: '🏰' },
+  { id: '1060975211', title: 'Tubes Inoubliables', color: '#34495E', icon: '🕰️' },
 ];
 
 export default function HomeScreen() {
@@ -25,6 +25,11 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <Text style={styles.title}>What's The Track</Text>
         <Text style={styles.subtitle}>Choisissez un thème pour commencer</Text>
+        
+        {/* NOUVEAU : Le bouton pour ouvrir la modale */}
+        <TouchableOpacity style={styles.rulesBtn} onPress={() => router.push('/modal')}>
+          <Text style={styles.rulesBtnText}>📖 Règles du jeu</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.grid}>
@@ -49,26 +54,12 @@ const styles = StyleSheet.create({
   title: { fontSize: 28, fontWeight: '900', color: '#111' },
   subtitle: { fontSize: 16, color: '#666', marginTop: 5 },
   
-  grid: { 
-    flexDirection: 'row', 
-    flexWrap: 'wrap', 
-    justifyContent: 'space-between', 
-    padding: 15 
-  },
-  card: {
-    width: '48%',
-    height: 150,
-    borderRadius: 15,
-    padding: 15,
-    marginBottom: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
+  // Style du nouveau bouton
+  rulesBtn: { marginTop: 15, paddingVertical: 8, paddingHorizontal: 15, backgroundColor: '#E0E0E0', borderRadius: 20 },
+  rulesBtnText: { fontWeight: '600', color: '#333' },
+
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', padding: 15 },
+  card: { width: '48%', height: 150, borderRadius: 15, padding: 15, marginBottom: 15, justifyContent: 'center', alignItems: 'center', elevation: 4, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 4 },
   cardIcon: { fontSize: 40, marginBottom: 10 },
   cardTitle: { color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }
 });
