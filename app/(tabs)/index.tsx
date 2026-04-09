@@ -1,5 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { styles } from '../../assets/styles/index.style';
 import { useGameStore } from '../../store/useGameStore';
 
 const CATEGORIES = [
@@ -14,9 +16,20 @@ const CATEGORIES = [
 export default function HomeScreen() {
   const router = useRouter();
   const startGame = useGameStore((state) => state.startGame);
+  
+  const [customId, setCustomId] = useState('');
 
   const handleSelectCategory = (playlistId: string) => {
     startGame(playlistId); 
+    router.push('/game');
+  };
+
+  const handleCustomPlay = () => {
+    if (!customId.trim()) {
+      Alert.alert("Oups ! 🎵", "Veuillez entrer un ID de playlist Deezer.");
+      return;
+    }
+    startGame(customId.trim());
     router.push('/game');
   };
 
@@ -26,10 +39,15 @@ export default function HomeScreen() {
         <Text style={styles.title}>What's The Track</Text>
         <Text style={styles.subtitle}>Choisissez un thème pour commencer</Text>
         
-        {/* NOUVEAU : Le bouton pour ouvrir la modale */}
-        <TouchableOpacity style={styles.rulesBtn} onPress={() => router.push('/modal')}>
-          <Text style={styles.rulesBtnText}>📖 Règles du jeu</Text>
-        </TouchableOpacity>
+        <View style={styles.actionButtons}>
+          <TouchableOpacity style={styles.actionBtn} onPress={() => router.push('/modal')}>
+            <Text style={styles.actionBtnText}>📖 Règles du jeu</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.actionBtn, styles.historyBtn]} onPress={() => router.push('/history')}>
+            <Text style={[styles.actionBtnText, styles.historyBtnText]}>🏆 Mon Historique</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.grid}>
@@ -43,23 +61,31 @@ export default function HomeScreen() {
             <Text style={styles.cardTitle}>{cat.title}</Text>
           </TouchableOpacity>
         ))}
+
+        <View style={[styles.card, styles.customCard]}>
+          <View style={styles.customCardHeader}>
+            <Text style={styles.customCardIcon}>🎧</Text>
+            <Text style={styles.customCardTitle}>Personnalisé</Text>
+          </View>
+          <Text style={styles.customSubtitle}>Colle l'ID d'une playlist Deezer :</Text>
+          
+          <View style={styles.inputRow}>
+            <TextInput
+              style={styles.input}
+              placeholder="Ex: 1404470955"
+              placeholderTextColor="#999"
+              keyboardType="numeric"
+              value={customId}
+              onChangeText={setCustomId}
+            />
+            <TouchableOpacity style={styles.playCustomBtn} onPress={handleCustomPlay}>
+              <Text style={styles.playCustomBtnText}>Go !</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
+      
+      <View style={{ height: 40 }} /> 
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F2F2F2' },
-  header: { padding: 30, paddingTop: 60, alignItems: 'center' },
-  title: { fontSize: 28, fontWeight: '900', color: '#111' },
-  subtitle: { fontSize: 16, color: '#666', marginTop: 5 },
-  
-  // Style du nouveau bouton
-  rulesBtn: { marginTop: 15, paddingVertical: 8, paddingHorizontal: 15, backgroundColor: '#E0E0E0', borderRadius: 20 },
-  rulesBtnText: { fontWeight: '600', color: '#333' },
-
-  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', padding: 15 },
-  card: { width: '48%', height: 150, borderRadius: 15, padding: 15, marginBottom: 15, justifyContent: 'center', alignItems: 'center', elevation: 4, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 4 },
-  cardIcon: { fontSize: 40, marginBottom: 10 },
-  cardTitle: { color: '#FFF', fontSize: 16, fontWeight: 'bold', textAlign: 'center' }
-});

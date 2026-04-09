@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
 import { Audio } from 'expo-av';
-import { useGameStore } from '../store/useGameStore';
-import { musicService, Track } from '../service/api';
+import { useRouter } from 'expo-router';
+import { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Timer } from '../components/game/Timer';
+import { musicService, Track } from '../service/api';
+import { storageService } from '../service/storage';
+import { useGameStore } from '../store/useGameStore';
 import { calculatePoints } from '../utils/scoreCalc';
 import { shuffleArray } from '../utils/shuffle';
-import { storageService } from '../service/storage';
 
 const COLORS = ['#E21B3C', '#1368CE', '#D89E00', '#26890C'];
 
@@ -76,7 +76,7 @@ export default function GameScreen() {
     } else {
       await storageService.saveGame(score, playlistId);
       endGame();
-      router.replace('/(tabs)/history');
+      router.replace('./ad');
     }
   };
 

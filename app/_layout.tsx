@@ -6,6 +6,7 @@ export default function RootLayout() {
       <Stack.Screen name="index" />
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="game" />
+      <Stack.Screen name="ad" />
       <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: false }} />
     </Stack>
   );
